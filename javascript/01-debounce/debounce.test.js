@@ -128,4 +128,49 @@ describe('debounce', () => {
         vi.advanceTimersByTime(500)
         expect(callback).not.toHaveBeenCalled()
     })
+
+    it("executes the pending callbacks immediately once flushed", () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+        fn("Sriram")
+        vi.advanceTimersByTime(200)
+        fn.flush()
+        expect(callback).toHaveBeenCalledTimes(1)
+        expect(callback).toHaveBeenNthCalledWith(1, "Sriram")
+    })
+
+    it("flush nothing when no pending invocations", () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+        fn.flush()
+        expect(callback).not.toHaveBeenCalled()
+    })
+
+    it("does not execute callback twice when flushed twice", () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+        fn("Sriram")
+        vi.advanceTimersByTime(200)
+        fn.flush()
+        fn.flush()
+        expect(callback).toHaveBeenCalledTimes(1)
+        expect(callback).toHaveBeenNthCalledWith(1, "Sriram")
+    })
+
+    it("when flushed, the last invocation wins",  () => {{
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+
+        fn("Sri")
+        vi.advanceTimersByTime(100)
+
+        fn("Sriram")
+        vi.advanceTimersByTime(100)
+
+        fn("Balasubramanian")
+        fn.flush()
+
+        expect(callback).toHaveBeenCalledTimes(1)
+        expect(callback).toHaveBeenNthCalledWith(1, "Balasubramanian")
+    }})
 })
