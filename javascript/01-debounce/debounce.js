@@ -10,5 +10,4 @@ export const debounce = function (callback, time) {
         clearTimeout(timeout)
     }
     return debounced
-
 }

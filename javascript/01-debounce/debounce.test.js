@@ -103,4 +103,29 @@ describe('debounce', () => {
         vi.advanceTimersByTime(500)
         expect(callback).not.toHaveBeenCalled()
     })
+
+    it("can be reused after cancel", () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+
+        fn("Sriram")
+        fn.cancel()
+
+        vi.advanceTimersByTime(300)
+        expect(callback).not.toHaveBeenCalled()
+
+        fn("Balasubramanian")
+        vi.advanceTimersByTime(500)
+
+        expect(callback).toHaveBeenCalledTimes(1)
+        expect(callback).toHaveBeenNthCalledWith(1, "Balasubramanian")
+    })
+
+    it("can be cancelled when nothing is pending",  () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+        fn.cancel()
+        vi.advanceTimersByTime(500)
+        expect(callback).not.toHaveBeenCalled()
+    })
 })
