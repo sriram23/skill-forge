@@ -1,9 +1,16 @@
-import {expect, describe, it, vi} from 'vitest'
+import {expect, describe, it, vi, beforeEach, afterEach} from 'vitest'
 import {debounce} from './debounce.js'
+
+beforeEach(() => {
+    vi.useFakeTimers()
+})
+
+afterEach(() => {
+    vi.useRealTimers()
+})
 
 describe('debounce', () => {
     it('is called after the expected delay', () => {
-        vi.useFakeTimers()
         const callback = vi.fn()
         const fn = debounce(callback, 500)
         fn("Sriram")
@@ -13,7 +20,6 @@ describe('debounce', () => {
     })
 
     it('is not called before the expected delay', () => {
-        vi.useFakeTimers()
         const callback = vi.fn()
         const fn = debounce(callback, 500)
         fn("Sriram")
