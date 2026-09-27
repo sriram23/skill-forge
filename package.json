@@ -1,0 +1,23 @@
+{
+  "name": "skill-forge",
+  "version": "1.0.0",
+  "description": "Strengthen your fundamentals",
+  "homepage": "https://github.com/sriram23/skill-forge#readme",
+  "bugs": {
+    "url": "https://github.com/sriram23/skill-forge/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sriram23/skill-forge.git"
+  },
+  "license": "ISC",
+  "author": "Sriram <sriramsubramanian23@gmail.com>",
+  "type": "module",
+  "scripts": {
+    "test": "vitest",
+    "test:run": "vitest run"
+  },
+  "devDependencies": {
+    "vitest": "^5.0.2"
+  }
+}
