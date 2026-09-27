@@ -79,4 +79,28 @@ describe('debounce', () => {
 
     })
 
+    it("should perserve 'this'", () => {
+        const callback = vi.fn(function() {
+            return this.name
+        })
+        const obj = {
+            name: "Sriram",
+            greet: debounce(callback, 500)
+        }
+        obj.greet()
+
+        vi.advanceTimersByTime(500)
+
+        expect(callback).toHaveBeenCalledTimes(1)
+        expect(callback).toHaveReturnedWith("Sriram")
+    })
+
+    it("should not execute callback after cancellation", () => {
+        const callback = vi.fn()
+        const fn = debounce(callback, 500)
+        fn("Sriram")
+        fn.cancel()
+        vi.advanceTimersByTime(500)
+        expect(callback).not.toHaveBeenCalled()
+    })
 })
