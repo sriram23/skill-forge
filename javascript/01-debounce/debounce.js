@@ -1,4 +1,4 @@
-const debounce = (callback, time) => {
+export const debounce = (callback, time) => {
     let timeout
     return (...args) => {
         clearTimeout(timeout)
@@ -7,8 +7,3 @@ const debounce = (callback, time) => {
         }, time)
     }
 }
-
-const log = debounce(console.log, 500)
-log("S")
-log("Sr")
-log("Sri")
