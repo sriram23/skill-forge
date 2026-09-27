@@ -1,24 +1,20 @@
 export const throttle = function (callback, limit) {
     let wait = false
+    let timeout
     const throttled = function(...args) {
         if(!wait) {
             callback.call(this, ...args)
             wait = true
-            setTimeout(() => {
+            timeout = setTimeout(() => {
                 wait = false
             }, limit)
         }
     }
 
     throttled.cancel = () => {
+        clearTimeout(timeout)
         wait = false
-    }
-
-    throttled.flush = () => {
-        if(wait) {
-            callback.call(this)
-            wait = false
-        }
+        timeout = null
     }
     return throttled
 }
